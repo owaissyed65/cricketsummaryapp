@@ -44,11 +44,30 @@ const Slug = ({ slug }) => {
     }
     const onChangeMembersDetails = (e, i) => {
         const existMember = allDetails.find(p => p[`mem${i}`])
+        let totalWicket = 0;
+        const wickets = allDetails.reduce((acc, i, index) => {
+            if (i?.[`mem${index + 1}`]?.[`wicket${index + 1}`]) {
+                console.log('hello')
+                return acc = acc + Number(i[`mem${index + 1}`][`wicket${index + 1}`])
+            }
+            return acc
+
+        }, 0)
+        if (e.target.name === `wicket${i}`) {
+            totalWicket = wickets + Number(e.target.value)
+        }
         if (existMember) {
             e.target.value = existMember[`mem${i}`][`${e.target.name}`]
             alert('You already filled this field')
             setDisableAdd(false)
             e.target.disabled = true
+        }
+        else if(totalWicket > 10){
+            alert("You Can't Add Wicket More than 10\n Your Total Wicket is now:"+totalWicket + "\n \t\t\t Sorry😶")
+            if (e.target.name === `wicket${i}`) {
+                e.target.value = 0 
+                e.target.disabled = true
+            }
         }
         else {
             setDisableAdd(true)
@@ -119,9 +138,9 @@ const Slug = ({ slug }) => {
                                         </select>
                                     </td>
                                     <td className='border-[2px] border-[black] p-2 text-left '>
-                                        <input type="text" className='w-full focus:border-none active:border-none focus:outline-none capitalize' placeholder='Enter A Score' name={`score${curEle}`} onChange={(e) => onChangeMembersDetails(e, curEle)} />
+                                        <input type="number" className='w-full focus:border-none active:border-none focus:outline-none capitalize' placeholder='Enter A Score' name={`score${curEle}`} onChange={(e) => onChangeMembersDetails(e, curEle)} />
                                     </td>
-                                    <td className='border-[2px] border-[black] p-2 text-left'> <input type="number" className={`w-full focus:border-none active:border-none focus:outline-none capitalize ${singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] === 'Batsman' ? 'cursor-not-allowed' : 'cursor-pointer'}`} placeholder='Enter A Wickets' name={`wicket${curEle}`} onChange={(e) => onChangeMembersDetails(e, curEle)} disabled={singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] === 'Batsman'} /></td>
+                                    <td className='border-[2px] border-[black] p-2 text-left'> <input type="number" className={`w-full focus:border-none active:border-none focus:outline-none capitalize ${singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] !== 'Bowler' && singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] !== 'All-Rounder' ? 'cursor-not-allowed' : 'cursor-pointer'}`} placeholder='Enter A Wickets' name={`wicket${curEle}`} onChange={(e) => onChangeMembersDetails(e, curEle)} disabled={singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] !== 'Bowler' && singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] !== 'All-Rounder'} /></td>
                                     <td className='p-2 text-left'>
                                         {/* button */}
                                         <input type='button' className={`${singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] && singleDetails?.[`mem${curEle}`]?.[`score${curEle}`] && singleDetails?.[`mem${curEle}`]?.[`name${curEle}`] && singleDetails?.num === curEle && disableAdd ? 'bg-[#720632] cursor-pointer transition-transform duration-500 hover:scale-90 ' : 'bg-[#720632]/40 cursor-not-allowed transition-none hover:scale-100 '}text-white px-6 rounded-3xl p-1`} value={'Add'} onClick={() => {

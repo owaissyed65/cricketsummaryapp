@@ -9,7 +9,7 @@ const Header = () => {
                 <div className='bg-[#702632] h-[50px] md:h-[80px] text-white shadow-sm shadow-[#702632]'>
                     <ul className='flex justify-center items-center gap-5 h-[100%] text-[20px]'>
                         <li><Link href='/'>Home</Link></li>
-                        <li><Link href='/'>Scorecard</Link></li>
+                        <li><Link href='/score/scorecard'>Scorecard</Link></li>
                     </ul>
                 </div>
             </Wrapper>
