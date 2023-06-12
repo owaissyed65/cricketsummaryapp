@@ -92,7 +92,7 @@ const initialState = {
         "name8": "kamil",
         "category8": "All-Rounder",
         "score8": "50",
-        "wicket8": "01"
+        "wicket8": "00"
       }
     },
     {
@@ -156,7 +156,7 @@ const initialState = {
         "name3": "hammad",
         "category3": "All-Rounder",
         "score3": "15",
-        "wicket3": "5"
+        "wicket3": "0"
       }
     },
     {
@@ -209,7 +209,7 @@ const initialState = {
         "name8": "kamil",
         "category8": "All-Rounder",
         "score8": "10",
-        "wicket8": "01"
+        "wicket8": "5"
       }
     },
     {
