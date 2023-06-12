@@ -42,12 +42,12 @@ const scorecard = () => {
     checkScoreTwo = checkScoreTwo - 5
   }
 
-  let totalScoreOne = useMemo((f) => {
-    return allDetails.filter((e, i) => e?.team === 'team-1' && Number(e?.[`mem${e?.num}`]?.[`score${e?.num}`]) > checkScoreOne)
+  let totalScoreOne = useMemo(() => {
+    return allDetails.filter((e) => e?.team === 'team-1' && Number(e?.[`mem${e?.num}`]?.[`score${e?.num}`]) > checkScoreOne)
   }, [allDetails])
   // console.log(totalScoreOne)
-  let totalScoreTwo = useMemo((f) => {
-    return allDetails.filter((e, i) => e?.team === 'team-2' && Number(e?.[`mem${e?.num}`]?.[`score${e?.num}`]) > checkScoreTwo)
+  let totalScoreTwo = useMemo(() => {
+    return allDetails.filter((e) => e?.team === 'team-2' && Number(e?.[`mem${e?.num}`]?.[`score${e?.num}`]) > checkScoreTwo)
   }, [allDetails])
   let teamOneScoreDetails = totalScoreOne.sort((p, q) => {
     return q?.[`mem${q.num}`]?.[`score${q.num}`] - p?.[`mem${p.num}`]?.[`score${p.num}`]
