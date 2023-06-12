@@ -47,7 +47,6 @@ const Slug = ({ slug }) => {
         let totalWicket = 0;
         const wickets = allDetails.reduce((acc, i, index) => {
             if (i?.[`mem${index + 1}`]?.[`wicket${index + 1}`]) {
-                console.log('hello')
                 return acc = acc + Number(i[`mem${index + 1}`][`wicket${index + 1}`])
             }
             return acc
@@ -66,7 +65,6 @@ const Slug = ({ slug }) => {
             alert("You Can't Add Wicket More than 10\n Your Total Wicket is now:"+totalWicket + "\n \t\t\t Sorry😶")
             if (e.target.name === `wicket${i}`) {
                 e.target.value = 0 
-                e.target.disabled = true
             }
         }
         else {

@@ -34,7 +34,6 @@ const index = () => {
           }
         </div>
       </Wrapper>
-      <div className='h-[100rem]'></div>
     </div>
   )
 }
