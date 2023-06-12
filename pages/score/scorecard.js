@@ -1,10 +1,8 @@
 import Wrapper from "@/components/Wrapper"
-import { useRouter } from "next/router"
-import { useEffect, useMemo } from "react"
+import {useMemo } from "react"
 import { useSelector } from "react-redux"
 
 const scorecard = () => {
-  const router = useRouter()
   const { allDetails } = useSelector(state => state.saveDataSlice)
   let teamOneScore = allDetails.map((p, i) => {
     if (p?.team === 'team-1') {
@@ -53,7 +51,7 @@ const scorecard = () => {
   }, [allDetails])
   let teamOneScoreDetails = totalScoreOne.sort((p, q) => {
     return q?.[`mem${q.num}`]?.[`score${q.num}`] - p?.[`mem${p.num}`]?.[`score${p.num}`]
-  })
+  },[allDetails])
   let teamTwoScoreDetails = totalScoreTwo.sort((p, q) => {
     return q?.[`mem${q.num}`]?.[`score${q.num}`] - p?.[`mem${p.num}`]?.[`score${p.num}`]
   })
