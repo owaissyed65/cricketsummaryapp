@@ -1,8 +1,16 @@
 import Wrapper from "@/components/Wrapper"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 import { useMemo } from "react"
 import { useSelector } from "react-redux"
 
 const Scorecard = () => {
+  const router = useRouter()
+  useEffect(() => {
+    if (allDetails.length !== 22) {
+      router.push('/')
+    }
+  }, [])
   const allDetails = useSelector(state => state.saveDataSlice.allDetails)
   // team one
   let teamOneScore = allDetails.map((p, i) => {
@@ -13,9 +21,11 @@ const Scorecard = () => {
   })
 
   let totalTeamOneScore = teamOneScore?.reduce((acc, cur) => acc + cur, 0)
-  let checkScoreOne = Math.max(...teamOneScore);
-
-  if (checkScoreOne <= 50 && checkScoreOne > 30) {
+  let checkScoreOne = Math.max(...teamOneScore)/4
+  if (checkScoreOne >  70){
+    checkScoreOne = checkScoreOne - 50
+  }
+  else if (checkScoreOne <= 50 && checkScoreOne > 30) {
     checkScoreOne = checkScoreOne - 30
   }
   else if (checkScoreOne <= 30 && checkScoreOne >= 15) {
@@ -41,7 +51,7 @@ const Scorecard = () => {
   })
   let totalTeamTwoWicket = teamOneWicket?.reduce((acc, cur) => acc + cur, 0)
   let teamOneTopWicketTaker = useMemo(() => {
-    return allDetails.filter((p) => p?.team === 'team-1' && p?.[`mem${p?.num}`][`wicket${p?.num}`]).sort((p, q) => {
+    return allDetails.filter((p) => p?.team === 'team-1' && p?.[`mem${p?.num}`][`wicket${p?.num}`] > 0).sort((p, q) => {
       return Number(q?.[`mem${q.num}`]?.[`wicket${q.num}`]) - Number(p?.[`mem${p.num}`]?.[`wicket${p.num}`])
     })
   }, [allDetails])
@@ -59,7 +69,7 @@ const Scorecard = () => {
   })
 
   let totalTeamTwoScore = teamTwoScore?.reduce((acc, cur) => acc + cur, 0)
-  let checkScoreTwo = Math.max(...teamTwoScore);
+  let checkScoreTwo = Math.max(...teamTwoScore)/3;
 
   if (checkScoreTwo <= 50 && checkScoreTwo > 30) {
     checkScoreTwo = checkScoreTwo - 30
@@ -87,7 +97,7 @@ const Scorecard = () => {
   })
   let totalTeamOneWicket = teamTwoWicket?.reduce((acc, cur) => acc + cur, 0)
   let teamTwoTopWicketTaker = useMemo(() => {
-    return allDetails.filter((p) => p?.team === 'team-2' && p?.[`mem${p?.num}`][`wicket${p?.num}`]).sort((p, q) => {
+    return allDetails.filter((p) => p?.team === 'team-2' && p?.[`mem${p?.num}`][`wicket${p?.num}`] > 0).sort((p, q) => {
       return Number(q?.[`mem${q.num}`]?.[`wicket${q.num}`]) - Number(p?.[`mem${p.num}`]?.[`wicket${p.num}`])
     })
   }, [allDetails])

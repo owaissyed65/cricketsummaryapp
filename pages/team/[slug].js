@@ -43,15 +43,32 @@ const Slug = ({ slug }) => {
         dispatch(addMatchDetails(details))
     }
     const onChangeMembersDetails = (e, i) => {
-        const existMember = allDetails.find(p => p[`mem${i}`])
+        const existMember = allDetails.find(p => {
+            if (p[`team`] === slug) {
+                return p[`mem${i}`]
+            }
+        })
+
+        let previousMember = allDetails?.find(p => {
+            if (p[`team`] === slug) {
+                return p?.num === i - 1
+            }
+        })
+        previousMember = i === 1 ? { h: 'owais' } : previousMember
+        if (!previousMember) {
+            alert("Please put some value in previous field");
+            e.target.value = "";
+        }
+
         let totalWicket = 0;
         const wickets = allDetails.reduce((acc, i, index) => {
-            if (i?.[`mem${index + 1}`]?.[`wicket${index + 1}`]) {
-                return acc = acc + Number(i[`mem${index + 1}`][`wicket${index + 1}`])
+            if (i?.[`mem${i.num}`]?.[`wicket${i.num}`] && i[`team`] === slug) {
+                return acc = acc + Number(i[`mem${i.num}`][`wicket${i.num}`])
             }
             return acc
 
         }, 0)
+    
         if (e.target.name === `wicket${i}`) {
             totalWicket = wickets + Number(e.target.value)
         }
@@ -61,13 +78,15 @@ const Slug = ({ slug }) => {
             setDisableAdd(false)
             e.target.disabled = true
         }
-        else if(totalWicket > 10){
-            alert("You Can't Add Wicket More than 10\n Your Total Wicket is now:"+totalWicket + "\n \t\t\t Sorry😶")
+        else if (totalWicket > 10) {
+
+            alert("You Can't Add Wicket More than 10\n Your Total Wicket is now:" + totalWicket + "\n \t\t\t Sorry😶")
             if (e.target.name === `wicket${i}`) {
-                e.target.value = 0 
+                e.target.value = 0
             }
         }
         else {
+            console.log('j')
             setDisableAdd(true)
             dispatch(addSingleData({
                 team: slug,
@@ -79,7 +98,12 @@ const Slug = ({ slug }) => {
         }
     }
     const addInformationOfMember = (curEle) => {
-        const existMember = allDetails.find(p => p[`mem${curEle}`])
+        const existMember = allDetails.find(p => {
+            if (p[`team`] === slug) {
+                p[`mem${curEle}`]
+            }
+        }
+        )
         if (existMember) {
             alert('You already filled this field')
             setDisableAdd(false)
@@ -88,7 +112,6 @@ const Slug = ({ slug }) => {
             if (singleDetails?.[`mem${curEle}`]?.[`category${curEle}`] && singleDetails?.[`mem${curEle}`]?.[`score${curEle}`] && singleDetails?.[`mem${curEle}`]?.[`name${curEle}`]) {
                 setDisableAdd(() => false)
                 dispatch(addAllDetails())
-
             } else {
                 alert('Please Fill required Field')
             }
